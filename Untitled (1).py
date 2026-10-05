@@ -3,6 +3,8 @@
 
 # In[42]:
 
+from pathlib import Path
+
 import streamlit as st
 
 import pandas as pd
@@ -12,7 +14,15 @@ import matplotlib.pyplot as plt
 # In[43]:
 
 
-netflix=pd.read_csv("netflix.csv")
+data_dir = Path(__file__).resolve().parent
+data_file = next(
+    (path for path in (data_dir / "netflix.csv", data_dir / "Netflix", data_dir / "Netflix.csv") if path.is_file()),
+    None,
+)
+if data_file is None:
+    raise FileNotFoundError(f"Netflix dataset not found beside the app in {data_dir}")
+
+netflix = pd.read_csv(data_file)
 
 
 # In[44]:
