@@ -3,6 +3,8 @@
 
 # In[7]:
 
+from pathlib import Path
+
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -10,8 +12,14 @@ import matplotlib.pyplot as plt
 
 # In[8]:
 
-
-netflix=pd.read_csv("netflix.csv")
+DATA_DIR = Path(__file__).resolve().parent
+DATA_CANDIDATES = (DATA_DIR / "Netflix.csv", DATA_DIR / "netflix.csv")
+DATA_PATH = next((path for path in DATA_CANDIDATES if path.is_file()), None)
+if DATA_PATH is None:
+    raise FileNotFoundError(
+        f"Could not find Netflix.csv or netflix.csv beside {Path(__file__).name}."
+    )
+netflix = pd.read_csv(DATA_PATH)
 
 
 # In[9]:
